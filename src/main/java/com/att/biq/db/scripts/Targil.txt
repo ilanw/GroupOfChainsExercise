@@ -1,0 +1,11 @@
+Implement a console application for the group of chains of stores (SQL Exercise).
+The program shall have the following Menu:
+
+1. Create a new Chain
+2. Add a store to a Chain
+3. Add Employee to Chain / to Group Management
+4. Present all shops that are in a certain Shopping Mall
+5. Present all shops that are in a certain Shopping Mall Group
+6. Present all Employees of a certain Chain
+7. Present all details of a Shop
+8. Add Unit Testing while you implement it.
