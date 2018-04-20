@@ -41,6 +41,7 @@ public class Chains {
 		} catch (SQLException e) {
 			System.out.println("Something went wrong. Execution failed. Please try again...");
 			System.out.println();
+			id++;
 			return;
 			// TODO: handle exception
 		}

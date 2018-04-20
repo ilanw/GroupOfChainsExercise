@@ -23,6 +23,7 @@ public class Menu extends DbBase {
 			System.out.println("C. To add an employee to a chain/group managment, please press 3");
 			System.out.println("C. To present all shops that are in a certain Shopping Mall, please press 4");
 			System.out.println("C. To present all shops that are in a certain Shopping Mall Group, please press 5");
+			System.out.println("C. To present all employees of a certain chain, please press 6");
 			System.out.println("D. To exit, please press 0");
 
 			msg = sc.nextLine();
@@ -65,6 +66,15 @@ public class Menu extends DbBase {
 
 				// TODO: Add runInputValidation
 				new Stores(con).getStorseByMallGroupId(mallGroupId);
+				break;
+			}
+			case "6": {
+				new Chains(con).getAllChains();
+				System.out.println("Please insert chain Id :");
+				String chainId = sc.nextLine();
+
+				// TODO: Add runInputValidation
+				new Employees(con).getEmployeeByChainId(chainId);
 				break;
 			}
 			}
