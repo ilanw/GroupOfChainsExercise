@@ -96,4 +96,9 @@ public class Stores {
 		System.out.println();
 	}
 
+	public void getAllStoreDetails(String storeId) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

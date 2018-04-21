@@ -46,6 +46,7 @@ public class Menu extends DbBase {
 				break;
 			}
 			case "2": {
+				new Chains(con).getAllChains();
 				System.out.println("Please insert store name and chain id :");
 				String name = sc.nextLine();
 				String type = sc.nextLine();

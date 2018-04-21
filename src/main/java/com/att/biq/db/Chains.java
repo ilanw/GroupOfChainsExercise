@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import com.mysql.jdbc.Connection;
 
 public class Chains {
-	private static int id = 35;
+	private static int id = 325;
 	private String SELECT_CHAINS_BY_NAME = "SELECT group_id, group_name FROM Groups WHERE group_name = ?";
 	private String SELECT_ALL_CHAINS = "SELECT * FROM Groups ";
 	private String INSERT_CHAIN = "INSERT INTO Groups VALUES (?,?,?,?)";
@@ -69,9 +69,9 @@ public class Chains {
 			String group_id = rs.getString("group_id");
 			String group_name = rs.getString("group_name");
 			String parent_id = rs.getString("parent_group_id");
-			System.out.print(index++ + ". Group id : " + group_id);
-			System.out.print("     | Group name : " + group_name);
-			System.out.println("     | Group parent id : " + parent_id);
+			System.out.print(index++ + ". Chain id : " + group_id);
+			System.out.print("     | Chain name : " + group_name);
+			System.out.println("     | Chain parent id : " + parent_id);
 		}
 	}
 }
