@@ -21,10 +21,12 @@ public class Menu extends DbBase {
 			System.out.println("A. To create new chain, please press 1");
 			System.out.println("B. To add a store to a chain, please press 2");
 			System.out.println("C. To add an employee to a chain/group managment, please press 3");
-			System.out.println("C. To present all shops that are in a certain Shopping Mall, please press 4");
-			System.out.println("C. To present all shops that are in a certain Shopping Mall Group, please press 5");
-			System.out.println("C. To present all employees of a certain chain, please press 6");
-			System.out.println("D. To exit, please press 0");
+			System.out.println("D. To present all shops that are in a certain Shopping Mall, please press 4");
+			System.out.println("E. To present all shops that are in a certain Shopping Mall Group, please press 5");
+			System.out.println("F. To present all employees of a certain chain, please press 6");
+			System.out.println("F. To present all details of a shope, please press 7");
+
+			System.out.println("G. To exit, please press 0");
 
 			msg = sc.nextLine();
 
@@ -75,6 +77,15 @@ public class Menu extends DbBase {
 
 				// TODO: Add runInputValidation
 				new Employees(con).getEmployeeByChainId(chainId);
+				break;
+			}
+			case "7": {
+				new Stores(con).getAllStores();
+				System.out.println("Please insert shope Id :");
+				String storeId = sc.nextLine();
+
+				// TODO: Add runInputValidation
+				new Stores(con).getAllStoreDetails(storeId);
 				break;
 			}
 			}

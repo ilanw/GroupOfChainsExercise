@@ -13,21 +13,18 @@ public class Employees {
 	public Employees(Connection con) {
 		this.connection = con;
 	}
-	//select all malls
+	// select all malls
 
 	public void getEmployeeByChainId(String chainId) throws SQLException {
+		boolean flag = false;
 		preparedStatement = connection.prepareStatement(SELECT_ALL_EMPLOYEE_BY_CHAIN_ID);
 		preparedStatement.setString(1, chainId);
 		preparedStatement.setString(2, chainId);
 
 		ResultSet rs = preparedStatement.executeQuery();
-		if(!rs.first()) {
-			System.out.println("No results found. Please try again from main menu...");
-			System.out.println();
-			return;
-		}
-			
+
 		while (rs.next()) {
+			flag = true;
 			String employee_id = rs.getString("employee_id");
 			String first_name = rs.getString("first_name");
 			String last_name = rs.getString("last_name");
@@ -36,5 +33,10 @@ public class Employees {
 			System.out.println("    | Last name : " + last_name);
 		}
 		System.out.println();
+		if (!flag) {
+			System.out.println("No results found. Please try again from main menu...");
+			System.out.println();
+			return;
+		}
 	}
 }
