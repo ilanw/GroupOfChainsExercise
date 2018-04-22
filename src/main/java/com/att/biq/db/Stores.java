@@ -10,6 +10,8 @@ public class Stores {
 	private String SELECT_STORE_BY_MALL_ID = "SELECT * FROM stores where mall_id = ?";
 	private String SELECT_STORE_BY_MALL_GROUP_ID = "SELECT * FROM malls join stores on malls.mall_id = stores.mall_id where mall_group_id = ?";
 	private String SELECT_ALL_STORES = "SELECT * FROM stores ";
+	private String SELECT_ALL_DETAILS = "select a.stores_id, a.store_name, a.address_id, a.mall_id, a.group_id, b.city_id, b.street_id from stores a join (select city_id, street_id,address_id from addresses )as b on b.address_id = a.address_id And stores_id = ?";
+
 	private String INSERT_CHAIN = "INSERT INTO stores VALUES (?,?,?,?)";
 	private Connection connection = null;
 	private PreparedStatement preparedStatement = null;
@@ -96,8 +98,27 @@ public class Stores {
 		System.out.println();
 	}
 
-	public void getAllStoreDetails(String storeId) {
+	public void getAllStoreDetails(String storeId) throws SQLException {
 		// TODO Auto-generated method stub
+		int index = 1;
+		System.out.println("Current exist stores are: ");
+		preparedStatement = connection.prepareStatement(SELECT_ALL_DETAILS);
+		preparedStatement.setString(1, storeId);
+		ResultSet rs = preparedStatement.executeQuery();
+		String storeName = rs.getString("store_name");		
+		int cityId = rs.getInt("city_id");
+		int streetId = rs.getInt("street_id");
+
+		while (rs.next()) {
+
+			String stores_id = rs.getString("stores_id");
+			String store_name = rs.getString("store_name");
+			String mall_id = rs.getString("mall_id");
+			System.out.print(index++ + ". Store id : " + stores_id);
+			System.out.print("     | Store name : " + store_name);
+			System.out.println("     | Mall id : " + mall_id);
+		}
+		System.out.println();
 		
 	}
 
