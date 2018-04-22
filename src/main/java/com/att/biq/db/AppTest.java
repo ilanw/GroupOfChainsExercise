@@ -1,4 +1,4 @@
-package att.GroupOfChains;
+package com.att.biq.db;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
