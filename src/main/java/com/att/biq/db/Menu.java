@@ -46,10 +46,16 @@ public class Menu extends DbBase {
 				break;
 			}
 			case "2": {
+				new Stores(con).addNewStore();
 				new Chains(con).getAllChains();
 				System.out.println("Please insert store name and chain id :");
 				String name = sc.nextLine();
 				String type = sc.nextLine();
+				// TODO: Add runInputValidation
+				break;
+			}
+			case "3": {
+				new Employees(con).addNewEmployee();
 				// TODO: Add runInputValidation
 				break;
 			}
@@ -59,7 +65,7 @@ public class Menu extends DbBase {
 				String mall = sc.nextLine();
 
 				// TODO: Add runInputValidation
-				new Stores(con).getStorseByMallId(mall);
+				new Stores(con).getStoresByMallId(mall);
 				break;
 			}
 			case "5": {
@@ -68,7 +74,7 @@ public class Menu extends DbBase {
 				String mallGroupId = sc.nextLine();
 
 				// TODO: Add runInputValidation
-				new Stores(con).getStorseByMallGroupId(mallGroupId);
+				new Stores(con).getStoresByMallGroupId(mallGroupId);
 				break;
 			}
 			case "6": {
