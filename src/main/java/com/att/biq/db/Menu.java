@@ -6,20 +6,17 @@ import java.util.Scanner;
 
 import com.mysql.jdbc.Connection;
 
-public class Menu extends DbBase
-{
+public class Menu extends DbBase {
 
-	public Menu() throws IOException
-	{
+	public Menu() throws IOException {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public void runApplication() throws SQLException, IOException
-	{
+	public void runApplication() throws SQLException, IOException {
 		Scanner sc = new Scanner(System.in);
 		String msg = "";
-		while (!msg.equals("0"))
-		{
+		while (!msg.equals("0")) {
 			System.out.println("Group of chains application menu:");
 			System.out.println("A. To create new chain, please press 1");
 			System.out.println("B. To add a store to a chain, please press 2");
@@ -33,15 +30,12 @@ public class Menu extends DbBase
 
 			msg = sc.nextLine();
 
-			if (!msg.equals("0"))
-			{
+			if (!msg.equals("0")) {
 
 			}
 			Connection con = connect();
-			switch (msg)
-			{
-			case "1":
-			{
+			switch (msg) {
+			case "1": {
 				new Chains(con).getAllChains();
 				System.out
 						.println("Please insert chain name and chain parent name (leave it empty if not applicable) :");
@@ -51,8 +45,8 @@ public class Menu extends DbBase
 				new Chains(con).createChain(name, parent);
 				break;
 			}
-			case "2":
-			{
+			case "2": {
+				new Stores(con).addNewStore();
 				new Chains(con).getAllChains();
 				System.out.println("Please insert store name and chain id :");
 				String name = sc.nextLine();
@@ -60,28 +54,30 @@ public class Menu extends DbBase
 				// TODO: Add runInputValidation
 				break;
 			}
-			case "4":
-			{
+			case "3": {
+				new Employees(con).addNewEmployee();
+				// TODO: Add runInputValidation
+				break;
+			}
+			case "4": {
 				new Malls(con).getAllMalls();
 				System.out.println("Please insert Mall Id :");
 				String mall = sc.nextLine();
 
 				// TODO: Add runInputValidation
-				new Stores(con).getStorseByMallId(mall);
+				new Stores(con).getStoresByMallId(mall);
 				break;
 			}
-			case "5":
-			{
+			case "5": {
 				new Malls(con).getAllMallsGroup();
 				System.out.println("Please insert Mall Group Id :");
 				String mallGroupId = sc.nextLine();
 
 				// TODO: Add runInputValidation
-				new Stores(con).getStorseByMallGroupId(mallGroupId);
+				new Stores(con).getStoresByMallGroupId(mallGroupId);
 				break;
 			}
-			case "6":
-			{
+			case "6": {
 				new Chains(con).getAllChains();
 				System.out.println("Please insert chain Id :");
 				String chainId = sc.nextLine();
@@ -90,8 +86,7 @@ public class Menu extends DbBase
 				new Employees(con).getEmployeeByChainId(chainId);
 				break;
 			}
-			case "7":
-			{
+			case "7": {
 				new Stores(con).getAllStores();
 				System.out.println("Please insert shope Id :");
 				String storeId = sc.nextLine();
