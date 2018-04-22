@@ -201,7 +201,7 @@ public class Stores {
 
 	public void getAllStoreDetails(String storeId) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 

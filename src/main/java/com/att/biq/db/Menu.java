@@ -10,7 +10,6 @@ public class Menu extends DbBase {
 
 	public Menu() throws IOException {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public void runApplication() throws SQLException, IOException {
@@ -30,23 +29,28 @@ public class Menu extends DbBase {
 
 			msg = sc.nextLine();
 
-			if (!msg.equals("0")) {
-
-			}
 			Connection con = connect();
 			switch (msg) {
 			case "1": {
 				new Chains(con).getAllChains();
-				System.out
-						.println("Please insert chain name and chain parent name (leave it empty if not applicable) :");
+				System.out.println("Please insert chain name: ");
 				String name = sc.nextLine();
+				System.out.println("Please insert chain parent name (leave it empty if not applicable) :");
 				String parent = sc.nextLine();
-				// TODO: Add runInputValidation
-				new Chains(con).createChain(name, parent);
+				System.out.println("Please insert business type: ");
+				String type = sc.nextLine();
+				boolean res = new Chains(con).createChain(name, parent, type);
+				if (!res) {
+					System.out.println();
+					System.out.println("Something went wrong. Execution failed. Please try again...");
+					System.out.println();
+				}
+
 				break;
 			}
 			case "2": {
 				new Stores(con).addNewStore();
+				System.out.println("Please insert chain id :");
 				// TODO: Add runInputValidation
 				break;
 			}
@@ -59,27 +63,37 @@ public class Menu extends DbBase {
 				new Malls(con).getAllMalls();
 				System.out.println("Please insert Mall Id :");
 				String mall = sc.nextLine();
+				boolean res = new Stores(con).getStoresByMallId(mall);
+				if (!res) {
+					System.out.println();
+					System.out.println("Something went wrong. Query failed. Please try again...");
+					System.out.println();
+				}
 
-				// TODO: Add runInputValidation
-				new Stores(con).getStoresByMallId(mall);
 				break;
 			}
 			case "5": {
 				new Malls(con).getAllMallsGroup();
 				System.out.println("Please insert Mall Group Id :");
 				String mallGroupId = sc.nextLine();
-
-				// TODO: Add runInputValidation
-				new Stores(con).getStoresByMallGroupId(mallGroupId);
+				boolean res = new Stores(con).getStoresByMallGroupId(mallGroupId);
+				if (!res) {
+					System.out.println();
+					System.out.println("Something went wrong. Query failed. Please try again...");
+					System.out.println();
+				}
 				break;
 			}
 			case "6": {
 				new Chains(con).getAllChains();
 				System.out.println("Please insert chain Id :");
 				String chainId = sc.nextLine();
-
-				// TODO: Add runInputValidation
-				new Employees(con).getEmployeeByChainId(chainId);
+				boolean res = new Employees(con).getEmployeeByChainId(chainId);
+				if (!res) {
+					System.out.println();
+					System.out.println("Something went wrong. Query failed. Please try again...");
+					System.out.println();
+				}
 				break;
 			}
 			case "7": {
@@ -87,8 +101,12 @@ public class Menu extends DbBase {
 				System.out.println("Please insert shope Id :");
 				String storeId = sc.nextLine();
 
-				// TODO: Add runInputValidation
 				new Stores(con).getAllStoreDetails(storeId);
+				break;
+			}
+			default: {
+				System.out.println("Wrong input inserted. Please try again...");
+				System.out.println();
 				break;
 			}
 			}
