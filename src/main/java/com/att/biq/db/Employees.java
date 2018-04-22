@@ -13,9 +13,9 @@ public class Employees {
 	private String ADD_STORE_EMPLOYEE = "INSERT INTO employees (employee_id,first_name, last_name, age, stores_id) VALUES (?,?,?,?,?)";
 	private String ADD_GROUP_EMPLOYEE = "INSERT INTO employees (employee_id,first_name, last_name, age, group_id) VALUES (?,?,?,?,?)";
 
-	private String firstName="";
-	private String lastName="";
-	private int age=0;
+	private String firstName = "";
+	private String lastName = "";
+	private int age = 0;
 	private Integer stores_id = null;
 	private Integer groups_id = null;
 
@@ -29,10 +29,9 @@ public class Employees {
 	public void addNewEmployee() throws SQLException {
 		setGroupOrStoreEmployee();
 		setEmployeeDetails();
-		addEmployeeToTable(1,firstName,lastName,age,stores_id,groups_id);
+		addEmployeeToTable(1, firstName, lastName, age, stores_id, groups_id);
 
 	}
-
 
 	private void setGroupOrStoreEmployee() throws SQLException {
 		boolean flag = false;
@@ -43,17 +42,19 @@ public class Employees {
 			System.out.println("2. Group");
 			int ans = sc.nextInt();
 			if (ans == 1) {
-				flag=true;
+				flag = true;
 				new Stores(connection).getAllStores();
 				System.out.println("------------------------------------------------------");
-				System.out.println("Please select the store id which the employee belong to from the above stores list (stores_id: ...)");
-				stores_id=sc.nextInt();
+				System.out.println(
+						"Please select the store id which the employee belong to from the above stores list (stores_id: ...)");
+				stores_id = sc.nextInt();
 			} else if (ans == 2) {
-				flag=true;
+				flag = true;
 				new Chains(connection).getAllChains();
 				System.out.println("------------------------------------------------------");
-				System.out.println("Please select the group id which the employee belong to from the above group list (group_id: ...)");
-				stores_id=sc.nextInt();
+				System.out.println(
+						"Please select the group id which the employee belong to from the above group list (group_id: ...)");
+				stores_id = sc.nextInt();
 			} else {
 				System.out.println("The new employee work in: (please select 1 or 2)");
 			}
@@ -63,42 +64,43 @@ public class Employees {
 	private void setEmployeeDetails() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Please insert employee first name:");
-		firstName=sc.nextLine();
+		firstName = sc.nextLine();
 		System.out.println("Please insert employee last name:");
-		lastName=sc.nextLine();
+		lastName = sc.nextLine();
 		System.out.println("Please insert employee age");
-		age=sc.nextInt();
+		age = sc.nextInt();
 	}
 
-
-	public void addEmployeeToTable( int id , String firstName,String lastName, int age,Integer stores_id,Integer groups_id) throws SQLException {
-		if (stores_id!=null) {
+	public void addEmployeeToTable(int id, String firstName, String lastName, int age, Integer stores_id,
+			Integer groups_id) throws SQLException {
+		if (stores_id != null) {
 			preparedStatement = connection.prepareStatement(ADD_STORE_EMPLOYEE);
 		} else {
 			preparedStatement = connection.prepareStatement(ADD_GROUP_EMPLOYEE);
 		}
 		preparedStatement.setInt(1, id);
-		preparedStatement.setString(2,firstName);
-		preparedStatement.setString(3,lastName);
+		preparedStatement.setString(2, firstName);
+		preparedStatement.setString(3, lastName);
 		preparedStatement.setInt(4, age);
-		if (stores_id!=null) {
+		if (stores_id != null) {
 			preparedStatement.setInt(5, stores_id);
-		}
-		else {
+		} else {
 			preparedStatement.setInt(5, groups_id);
 		}
 		preparedStatement.executeUpdate();
 	}
 
-
-	public void getEmployeeByChainId(String chainId) throws SQLException {
+	public boolean getEmployeeByChainId(String chainId) throws SQLException {
 		boolean flag = false;
+		ResultSet rs = null;
 		preparedStatement = connection.prepareStatement(SELECT_ALL_EMPLOYEE_BY_CHAIN_ID);
 		preparedStatement.setString(1, chainId);
 		preparedStatement.setString(2, chainId);
-
-		ResultSet rs = preparedStatement.executeQuery();
-
+		try {
+			rs = preparedStatement.executeQuery();
+		} catch (SQLException e) {
+			return false;
+		}
 		while (rs.next()) {
 			flag = true;
 			String employee_id = rs.getString("employee_id");
@@ -112,7 +114,8 @@ public class Employees {
 		if (!flag) {
 			System.out.println("No results found. Please try again from main menu...");
 			System.out.println();
-			return;
+
 		}
+		return true;
 	}
 }
