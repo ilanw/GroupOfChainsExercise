@@ -29,7 +29,7 @@ public class Employees {
 	public void addNewEmployee() throws SQLException {
 		setGroupOrStoreEmployee();
 		setEmployeeDetails();
-		addEmployeeToTable(firstName,lastName,age,stores_id,groups_id);
+		addEmployeeToTable();
 
 	}
 
@@ -71,7 +71,7 @@ public class Employees {
 		age = sc.nextInt();
 	}
 
-	public void addEmployeeToTable) throws SQLException {
+	public void addEmployeeToTable() throws SQLException {
 		if (stores_id != null) {
 			preparedStatement = connection.prepareStatement(ADD_STORE_EMPLOYEE);
 		} else {
