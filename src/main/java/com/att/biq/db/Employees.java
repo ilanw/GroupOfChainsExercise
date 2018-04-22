@@ -10,8 +10,8 @@ import com.mysql.jdbc.Connection;
 
 public class Employees {
 	private String SELECT_ALL_EMPLOYEE_BY_CHAIN_ID = "SELECT * FROM employees join stores on employees.stores_id = stores.stores_id where stores.group_id = ? or employees.group_id = ?";
-	private String ADD_STORE_EMPLOYEE = "INSERT INTO employees (employee_id,first_name, last_name, age, stores_id) VALUES (?,?,?,?,?)";
-	private String ADD_GROUP_EMPLOYEE = "INSERT INTO employees (employee_id,first_name, last_name, age, group_id) VALUES (?,?,?,?,?)";
+	private String ADD_STORE_EMPLOYEE = "INSERT INTO employees (first_name, last_name, age, stores_id) VALUES (?,?,?,?)";
+	private String ADD_GROUP_EMPLOYEE = "INSERT INTO employees (first_name, last_name, age, group_id) VALUES (?,?,?,?)";
 
 	private String firstName = "";
 	private String lastName = "";
@@ -29,7 +29,7 @@ public class Employees {
 	public void addNewEmployee() throws SQLException {
 		setGroupOrStoreEmployee();
 		setEmployeeDetails();
-		addEmployeeToTable(1, firstName, lastName, age, stores_id, groups_id);
+		addEmployeeToTable();
 
 	}
 
@@ -71,21 +71,19 @@ public class Employees {
 		age = sc.nextInt();
 	}
 
-	public void addEmployeeToTable(int id, String firstName, String lastName, int age, Integer stores_id,
-			Integer groups_id) throws SQLException {
+	public void addEmployeeToTable() throws SQLException {
 		if (stores_id != null) {
 			preparedStatement = connection.prepareStatement(ADD_STORE_EMPLOYEE);
 		} else {
 			preparedStatement = connection.prepareStatement(ADD_GROUP_EMPLOYEE);
 		}
-		preparedStatement.setInt(1, id);
-		preparedStatement.setString(2, firstName);
-		preparedStatement.setString(3, lastName);
-		preparedStatement.setInt(4, age);
+		preparedStatement.setString(1,firstName);
+		preparedStatement.setString(2,lastName);
+		preparedStatement.setInt(3, age);
 		if (stores_id != null) {
-			preparedStatement.setInt(5, stores_id);
+			preparedStatement.setInt(4, stores_id);
 		} else {
-			preparedStatement.setInt(5, groups_id);
+			preparedStatement.setInt(4, groups_id);
 		}
 		preparedStatement.executeUpdate();
 	}

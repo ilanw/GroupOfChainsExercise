@@ -50,11 +50,7 @@ public class Menu extends DbBase {
 			}
 			case "2": {
 				new Stores(con).addNewStore();
-				new Chains(con).getAllChains();
-				System.out.println("Please insert store name :");
-				String name = sc.nextLine();
 				System.out.println("Please insert chain id :");
-				String type = sc.nextLine();
 				// TODO: Add runInputValidation
 				break;
 			}

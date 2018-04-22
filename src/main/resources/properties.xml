@@ -4,7 +4,7 @@
     <comment>xml example</comment>
     <entry key="serverName">localhost</entry>
     <entry key="serverPort">3306</entry>
-    <entry key="dbName">yoyo</entry>
+    <entry key="dbName">test</entry>
     <entry key="user">root</entry>
     <entry key="password">admin</entry>
 </properties>

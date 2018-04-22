@@ -9,9 +9,10 @@ import com.mysql.jdbc.Connection;
 
 public class Chains
 {
+	private static int id = 325;
 	private String SELECT_CHAINS_BY_NAME = "SELECT group_id, group_name FROM Groups WHERE group_name = ?";
 	private String SELECT_ALL_CHAINS = "SELECT * FROM Groups ";
-	private String INSERT_CHAIN = "INSERT INTO Groups VALUES (NULL,?,?,?)";
+	private String INSERT_CHAIN = "INSERT INTO Groups VALUES (?,?,?,?)";
 	private Connection connection = null;
 	private PreparedStatement preparedStatement = null;
 
@@ -20,37 +21,41 @@ public class Chains
 		this.connection = con;
 	}
 
-	public boolean createChain(String name, String parent, String type) throws SQLException
+	public void createChain(String name, String parent) throws SQLException
 	{
 		int parentid = 0;
 		preparedStatement = connection.prepareStatement(INSERT_CHAIN);
+		preparedStatement.setInt(1, ++id);
+
 		if (parent != null)
 		{
 			PreparedStatement tempStatement = connection
-					.prepareStatement("select group_id FROM groups where group_name=?");
+					.prepareStatement("select parent_group_id FROM groups where group_name=?");
 			tempStatement.setString(1, parent);
 			ResultSet rs = tempStatement.executeQuery();
 			while (rs.next())
 			{
 				parentid = rs.getInt(1);
 			}
-			preparedStatement.setLong(1, parentid);
+			preparedStatement.setLong(2, parentid);
 		}
 		else
-			preparedStatement.setString(1, null);
+			preparedStatement.setString(2, null);
 
-		preparedStatement.setString(2, name);
-		preparedStatement.setString(3, type);
+		preparedStatement.setString(3, name);
+		preparedStatement.setString(4, "");
 		try
 		{
 			preparedStatement.executeUpdate();
 		}
 		catch (SQLException e)
 		{
-			return false;
-			// TODO: Log exception
+			System.out.println("Something went wrong. Execution failed. Please try again...");
+			System.out.println();
+			id++;
+			return;
+			// TODO: handle exception
 		}
-		return true;
 	}
 
 	public void getChain(String name) throws SQLException
