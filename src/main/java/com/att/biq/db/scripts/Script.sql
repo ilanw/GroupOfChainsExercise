@@ -43,8 +43,8 @@ CREATE TABLE `Addresses` (
   `building_No` bigint(20) DEFAULT NULL
 );
 ALTER TABLE Addresses AUTO_INCREMENT=100;
-INSERT INTO Addresses (city_id,street_id,building_No)VALUES ( 1, 1,20);
-INSERT INTO Addresses (city_id,street_id,building_No)VALUES ( 2, 1, 22);
+INSERT INTO Addresses (city_id,street_id,building_No)VALUES ( 100, 100,20);
+INSERT INTO Addresses (city_id,street_id,building_No)VALUES ( 101, 100, 22);
 
 CREATE TABLE `Stores` (
   `stores_id` int NOT NULL AUTO_INCREMENT,
@@ -73,7 +73,7 @@ CREATE TABLE `Employees` (
 ALTER TABLE Employees AUTO_INCREMENT=100;
 INSERT INTO Employees (first_name,last_name,age,stores_id)VALUES ( 'Guy', 'Bitan', 40,100);
 INSERT INTO Employees (first_name,last_name,age,group_id)VALUES ( 'Doron', 'Niv', 32,100);
-INSERT INTO Employees (first_name,last_name,age,stores_id)VALUES ( 'Ilan', 'Valershtein', 40,101);
+INSERT INTO Employees (first_name,last_name,age,stores_id)VALUES ( 'Ilan', 'Wallerstein', 40,101);
 
 CREATE TABLE `Malls` (
   `mall_id` int NOT NULL AUTO_INCREMENT,
