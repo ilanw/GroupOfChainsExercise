@@ -29,9 +29,6 @@ public class Menu extends DbBase {
 
 			msg = sc.nextLine();
 
-			if (!msg.equals("0")) {
-
-			}
 			Connection con = connect();
 			switch (msg) {
 			case "1": {
@@ -70,8 +67,6 @@ public class Menu extends DbBase {
 				new Malls(con).getAllMalls();
 				System.out.println("Please insert Mall Id :");
 				String mall = sc.nextLine();
-
-				// TODO: Add runInputValidation
 				boolean res = new Stores(con).getStoresByMallId(mall);
 				if (!res) {
 					System.out.println();
@@ -85,7 +80,6 @@ public class Menu extends DbBase {
 				new Malls(con).getAllMallsGroup();
 				System.out.println("Please insert Mall Group Id :");
 				String mallGroupId = sc.nextLine();
-
 				boolean res = new Stores(con).getStoresByMallGroupId(mallGroupId);
 				if (!res) {
 					System.out.println();
@@ -98,8 +92,6 @@ public class Menu extends DbBase {
 				new Chains(con).getAllChains();
 				System.out.println("Please insert chain Id :");
 				String chainId = sc.nextLine();
-
-				// TODO: Add runInputValidation
 				boolean res = new Employees(con).getEmployeeByChainId(chainId);
 				if (!res) {
 					System.out.println();
@@ -113,12 +105,12 @@ public class Menu extends DbBase {
 				System.out.println("Please insert shope Id :");
 				String storeId = sc.nextLine();
 
-				// TODO: Add runInputValidation
 				new Stores(con).getAllStoreDetails(storeId);
 				break;
 			}
 			default: {
 				System.out.println("Wrong input inserted. Please try again...");
+				System.out.println();
 				break;
 			}
 			}
