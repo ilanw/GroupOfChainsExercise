@@ -14,7 +14,7 @@ import com.mysql.jdbc.Connection;
  * the appropriate class/method per user request
  *
  */
-public class Menu extends DbBase {
+public class Menu extends DbConnection {
 
 	public Menu() throws IOException {
 		super();

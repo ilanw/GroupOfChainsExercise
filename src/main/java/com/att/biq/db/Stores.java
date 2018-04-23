@@ -11,7 +11,6 @@ import java.util.Scanner;
 import com.mysql.jdbc.Connection;
 
 public class Stores {
-	private static int id = 350;
 	private String SELECT_STORE_BY_MALL_ID = "SELECT * FROM stores where mall_id = ?";
 	private String SELECT_STORE_BY_MALL_GROUP_ID = "SELECT * FROM malls join stores on malls.mall_id = stores.mall_id where mall_group_id = ?";
 	private String SELECT_ALL_STORES = "SELECT * FROM stores ";
@@ -89,7 +88,7 @@ public class Stores {
 				address_id = rs.getInt("address_id");
 			}
 		} else {
-			Address ad = new Address(connection);
+			Addresses ad = new Addresses(connection);
 			int city_id = getCityID(ad);
 			int street_id = gettreetID(ad);
 			int building_No = getBuildingNo();
@@ -109,14 +108,14 @@ public class Stores {
 		}
 	}
 
-	private int getCityID(Address ad) throws SQLException {
+	private int getCityID(Addresses ad) throws SQLException {
 		ad.getAllCities();
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Please select store city address: (city_id: ...)");
 		return sc.nextInt();
 	}
 
-	private int gettreetID(Address ad) throws SQLException {
+	private int gettreetID(Addresses ad) throws SQLException {
 		ad.getAllStreets();
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Please select store street address: (street_id: ...)");

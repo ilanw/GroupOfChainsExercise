@@ -10,7 +10,7 @@ import java.sql.SQLException;
  * This class represent an address which set by combination of city + street + building no
  *
  */
-public class Address {
+public class Addresses {
     private String SELECT_ALL_ADDRESS = "SELECT * FROM address ";
     private String SELECT_ALL_CITIES = "SELECT * FROM cities ";
     private String SELECT_ALL_STREETS = "SELECT street_id,street_name FROM streets ";
@@ -18,7 +18,7 @@ public class Address {
     private Connection connection = null;
     private PreparedStatement preparedStatement = null;
 
-    public Address(Connection con) {
+    public Addresses(Connection con) {
         this.connection = con;
     }
 

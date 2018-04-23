@@ -11,14 +11,14 @@ import java.util.Properties;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
-public abstract class DbBase
+public abstract class DbConnection
 {
 
 	MysqlDataSource ds;
 	Connection conn = null;
 	Statement stmt = null;
 
-	public DbBase() throws IOException
+	public DbConnection() throws IOException
 	{
 		ds = new MysqlDataSource();
 		InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("properties.xml");

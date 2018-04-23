@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import com.mysql.jdbc.Connection;
 
 public class Chains {
-	private String SELECT_CHAINS_BY_NAME = "SELECT group_id, group_name FROM Groups WHERE group_name = ?";
 	private String SELECT_ALL_CHAINS = "SELECT * FROM Groups ";
 	private String INSERT_CHAIN = "INSERT INTO Groups VALUES (NULL,?,?,?)";
 	private Connection connection = null;
