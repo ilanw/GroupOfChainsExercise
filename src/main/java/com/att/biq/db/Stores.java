@@ -14,16 +14,14 @@ public class Stores {
 	private String SELECT_ALL_STORES = "SELECT * FROM stores ";
 	private String SELECT_ADDRESS = "SELECT address_id FROM addresses where city_id = ? and street_id = ? and building_No =?";
 	private String INSERT_CHAIN_IN_MALL = "INSERT INTO stores (store_name,mall_id,group_id) VALUES (?,?,?)";
-	private String INSERT_CHAIN  = "INSERT INTO stores (store_name,address_id,group_id) VALUES (?,?,?)";
+	private String INSERT_CHAIN = "INSERT INTO stores (store_name,address_id,group_id) VALUES (?,?,?)";
 	private Connection connection = null;
 	private PreparedStatement preparedStatement = null;
 
-
-	private String store_name="";
-	private Integer address_id=null;
+	private String store_name = "";
+	private Integer address_id = null;
 	private Integer mall_id = null;
 	private Integer groups_id = null;
-
 
 	public Stores(Connection con) {
 		this.connection = con;
@@ -36,20 +34,20 @@ public class Stores {
 		setStoreAddress();
 		addStoreToTable();
 
-
 	}
 
 	private void setStoreName() {
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Please insert store name:" );
-		store_name=sc.nextLine();
+		System.out.println("Please insert store name:");
+		store_name = sc.nextLine();
 	}
 
 	private void setStoreGroupID() throws SQLException {
 		new Chains(connection).getAllChains();
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Please select the group id which the store belong to from the above group list (group_id: ...)");
-		groups_id=sc.nextInt();
+		System.out.println(
+				"Please select the group id which the store belong to from the above group list (group_id: ...)");
+		groups_id = sc.nextInt();
 
 	}
 
@@ -61,8 +59,10 @@ public class Stores {
 			String ans = sc.nextLine();
 			if (ans.toLowerCase().equals("y")) {
 				flag = true;
-				new Malls(connection).getAllMalls();System.out.println("Please select the mall id which the store belong to from the above mall list (mall_id: ...)");
-				mall_id=sc.nextInt();
+				new Malls(connection).getAllMalls();
+				System.out.println(
+						"Please select the mall id which the store belong to from the above mall list (mall_id: ...)");
+				mall_id = sc.nextInt();
 			} else if (ans.toLowerCase().equals("n")) {
 				flag = true;
 			} else {
@@ -70,7 +70,6 @@ public class Stores {
 			}
 		}
 	}
-
 
 	private void setStoreAddress() throws SQLException {
 		if (mall_id != null) {
@@ -91,17 +90,16 @@ public class Stores {
 			preparedStatement.setInt(2, street_id);
 			preparedStatement.setInt(3, building_No);
 			ResultSet rs = preparedStatement.executeQuery();
-			if(rs.next()){
+			if (rs.next()) {
 				address_id = rs.getInt("address_id");
-			} else{
-				ad.setNewAddress(city_id,street_id,building_No);
+			} else {
+				ad.setNewAddress(city_id, street_id, building_No);
 				rs = preparedStatement.executeQuery();
 				rs.next();
 				address_id = rs.getInt("address_id");
 			}
 		}
 	}
-
 
 	private int getCityID(Address ad) throws SQLException {
 		ad.getAllCities();
@@ -123,15 +121,14 @@ public class Stores {
 		return sc.nextInt();
 	}
 
-
 	public void addStoreToTable() throws SQLException {
-		if (mall_id!=null) {
+		if (mall_id != null) {
 			preparedStatement = connection.prepareStatement(INSERT_CHAIN_IN_MALL);
 		} else {
 			preparedStatement = connection.prepareStatement(INSERT_CHAIN);
 		}
-		preparedStatement.setString(1,store_name);
-		if (mall_id!=null) {
+		preparedStatement.setString(1, store_name);
+		if (mall_id != null) {
 			preparedStatement.setInt(2, mall_id);
 		} else {
 			preparedStatement.setInt(2, address_id);
@@ -140,46 +137,46 @@ public class Stores {
 		preparedStatement.executeUpdate();
 	}
 
-	public void getStoresByMallId(String mallId) throws SQLException {
-		boolean flag = false;
+	public boolean getStoresByMallId(String mallId) throws SQLException {
+		ResultSet rs = null;
 		preparedStatement = connection.prepareStatement(SELECT_STORE_BY_MALL_ID);
 		preparedStatement.setString(1, mallId);
-		ResultSet rs = preparedStatement.executeQuery();
-
+		try {
+			rs = preparedStatement.executeQuery();
+		} catch (SQLException e) {
+			return false;
+		}
 		while (rs.next()) {
-			flag = true;
 			String store_id = rs.getString("stores_id");
 			String store_name = rs.getString("store_name");
 			System.out.print("store_id : " + store_id);
 			System.out.println("    | store_name : " + store_name);
 		}
 		System.out.println();
-		if (!flag) {
-			System.out.println("No results found. Please try again from main menu...");
-			System.out.println();
-			return;
-		}
+	
+		return true;
 	}
 
-	public void getStoresByMallGroupId(String mallGroupId) throws SQLException {
-		boolean flag = false;
+	public boolean getStoresByMallGroupId(String mallGroupId) throws SQLException {
+		ResultSet rs = null;
 		preparedStatement = connection.prepareStatement(SELECT_STORE_BY_MALL_GROUP_ID);
 		preparedStatement.setString(1, mallGroupId);
-		ResultSet rs = preparedStatement.executeQuery();
-
+		try {
+			rs = preparedStatement.executeQuery();
+		} catch (SQLException e) {
+			//TODO: log exception
+			return false;
+			
+		}
 		while (rs.next()) {
-			flag = true;
 			String store_id = rs.getString("stores_id");
 			String store_name = rs.getString("store_name");
 			System.out.print("store_id : " + store_id);
 			System.out.println("    | store_name : " + store_name);
 		}
 		System.out.println();
-		if (!flag) {
-			System.out.println("No results found. Please try again from main menu...");
-			System.out.println();
-			return;
-		}
+		
+		return true;
 	}
 
 	public void getAllStores() throws SQLException {
@@ -203,6 +200,5 @@ public class Stores {
 		// TODO Auto-generated method stub
 
 	}
-
 
 }
