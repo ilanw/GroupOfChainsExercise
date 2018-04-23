@@ -1,5 +1,7 @@
 package com.att.biq.db;
-
+/**
+ * Author: Doron Niv
+ */
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

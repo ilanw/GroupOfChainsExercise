@@ -1,11 +1,19 @@
 package com.att.biq.db;
 
+/**
+ * Author: Ilan Wallerstein
+ */
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Scanner;
 
 import com.mysql.jdbc.Connection;
 
+/**
+ * This class will interact with the user and at accordingly. It will operate
+ * the appropriate class/method per user request
+ *
+ */
 public class Menu extends DbBase {
 
 	public Menu() throws IOException {
@@ -102,6 +110,9 @@ public class Menu extends DbBase {
 				String storeId = sc.nextLine();
 
 				new Stores(con).getAllStoreDetails(storeId);
+				break;
+			}
+			case "0": {
 				break;
 			}
 			default: {

@@ -1,7 +1,7 @@
 package com.att.biq.db;
 
 /**
- * Guy Bitan
+ * Author: Guy Bitan, Ilan Wallerstein
  */
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,6 +19,7 @@ public class Chains {
 		this.connection = con;
 	}
 
+	// Create new chain
 	public boolean createChain(String name, String parent, String type) throws SQLException {
 		int parentid = 0;
 		ResultSet rs = null;
@@ -45,6 +46,8 @@ public class Chains {
 		preparedStatement.setString(3, type);
 		try {
 			preparedStatement.executeUpdate();
+			System.out.println("Creation succeded...");
+			System.out.println();
 		} catch (SQLException e) {
 			System.out.println("Something went wrong. Execution failed. Please try again...");
 			System.out.println();
@@ -54,31 +57,31 @@ public class Chains {
 		return true;
 	}
 
-	public void getChain(String name) throws SQLException {
-		preparedStatement = connection.prepareStatement(SELECT_CHAINS_BY_NAME);
-		preparedStatement.setString(1, name);
-		ResultSet rs = preparedStatement.executeQuery();
-		while (rs.next()) {
-			String group_id = rs.getString("group_id");
-			String group_name = rs.getString("group_name");
-			System.out.println("userid : " + group_id);
-			System.out.println("username : " + group_name);
-		}
-	}
-
+	// Get all chains
 	public void getAllChains() throws SQLException {
-		int index = 1;
+		boolean flag = false;
+		ResultSet rs = null;
 		System.out.println("Current exist groups are: ");
 		preparedStatement = connection.prepareStatement(SELECT_ALL_CHAINS);
-		ResultSet rs = preparedStatement.executeQuery();
-		while (rs.next()) {
+		try {
+			rs = preparedStatement.executeQuery();
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
 
+		while (rs.next()) {
+			flag = true;
 			String group_id = rs.getString("group_id");
 			String group_name = rs.getString("group_name");
 			String parent_id = rs.getString("parent_group_id");
-			System.out.print(index++ + ". Chain id : " + group_id);
+			System.out.print("- " + "Chain id : " + group_id);
 			System.out.print("     | Chain name : " + group_name);
 			System.out.println("     | Chain parent id : " + parent_id);
+		}
+		if (!flag) {
+			System.out.println("No results found. Please try again from main menu...");
+			System.out.println();
+
 		}
 	}
 }

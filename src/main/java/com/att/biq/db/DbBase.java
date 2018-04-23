@@ -1,5 +1,7 @@
 package com.att.biq.db;
-
+/**
+ * Author: Guy Bitan
+ */
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;

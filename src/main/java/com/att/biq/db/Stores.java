@@ -1,5 +1,8 @@
 package com.att.biq.db;
 
+/**
+ * Author: Ilan Wallerstein, Doron Niv
+ */
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -153,43 +156,54 @@ public class Stores {
 			System.out.println("    | store_name : " + store_name);
 		}
 		System.out.println();
-	
+
 		return true;
 	}
 
 	public boolean getStoresByMallGroupId(String mallGroupId) throws SQLException {
 		ResultSet rs = null;
+		boolean flag = false;
 		preparedStatement = connection.prepareStatement(SELECT_STORE_BY_MALL_GROUP_ID);
 		preparedStatement.setString(1, mallGroupId);
 		try {
 			rs = preparedStatement.executeQuery();
 		} catch (SQLException e) {
-			//TODO: log exception
+			// TODO: log exception
 			return false;
-			
+
 		}
 		while (rs.next()) {
+			flag = true;
 			String store_id = rs.getString("stores_id");
 			String store_name = rs.getString("store_name");
 			System.out.print("store_id : " + store_id);
 			System.out.println("    | store_name : " + store_name);
 		}
+		if (!flag) {
+			System.out.println("No results found. Please try again from main menu...");
+			System.out.println();
+
+		}
 		System.out.println();
-		
+
 		return true;
 	}
 
 	public void getAllStores() throws SQLException {
-		int index = 1;
+		ResultSet rs = null;
 		System.out.println("Current exist stores are: ");
 		preparedStatement = connection.prepareStatement(SELECT_ALL_STORES);
-		ResultSet rs = preparedStatement.executeQuery();
+		try {
+			rs = preparedStatement.executeQuery();
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
 		while (rs.next()) {
 
 			String stores_id = rs.getString("stores_id");
 			String store_name = rs.getString("store_name");
 			String mall_id = rs.getString("mall_id");
-			System.out.print(index++ + ". Store id : " + stores_id);
+			System.out.print("- " + " Store id : " + stores_id);
 			System.out.print("     | Store name : " + store_name);
 			System.out.println("     | Mall id : " + mall_id);
 		}
