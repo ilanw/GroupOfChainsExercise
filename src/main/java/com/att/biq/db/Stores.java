@@ -18,6 +18,11 @@ public class Stores {
 	private String SELECT_ADDRESS = "SELECT address_id FROM addresses where city_id = ? and street_id = ? and building_No =?";
 	private String INSERT_CHAIN_IN_MALL = "INSERT INTO stores (store_name,mall_id,group_id) VALUES (?,?,?)";
 	private String INSERT_CHAIN = "INSERT INTO stores (store_name,address_id,group_id) VALUES (?,?,?)";
+	private String SELECT_STORE_DETAILS = "select stores_id, store_name, mall_id, group_id from stores where stores_id = ?";
+	private String SELECT_STORE_CITY_BY_ID = "select C.city_name from Cities C join addresses A on C.city_id = A.city_id join stores S on S.address_id = A.address_id and S.stores_id = ?";
+	private String SELECT_STORE_STREET_BY_ID = "select C.street_name from streets C join addresses A on C.street_id = A.street_id join stores S on S.address_id = A.address_id and S.stores_id = ?";
+	private String SELECT_MALL_ID_FROM_STORES = "select mall_id from stores where stores_id = ? ";
+
 	private Connection connection = null;
 	private PreparedStatement preparedStatement = null;
 
@@ -210,9 +215,78 @@ public class Stores {
 		System.out.println();
 	}
 
-	public void getAllStoreDetails(String storeId) {
-		// TODO Auto-generated method stub
+	public boolean getAllStoreDetails(String storeId) throws SQLException {
+		// TODO in phase 2:  Union all queries into one 
+		ResultSet rs = null;
+		boolean flag = false;
+		preparedStatement = connection.prepareStatement(SELECT_STORE_DETAILS);
+		preparedStatement.setString(1, storeId);
+		try {
+			rs = preparedStatement.executeQuery();
+		} catch (SQLException e) {
+			// TODO: log exception
+			return false;
 
+		}
+		while (rs.next()) {
+			flag = true;
+			String store_id = rs.getString("stores_id");
+			String store_name = rs.getString("store_name");
+			System.out.print("store_id : " + store_id);
+			System.out.println("    | store_name : " + store_name);
+		}
+		
+		preparedStatement = connection.prepareStatement(SELECT_MALL_ID_FROM_STORES);
+		preparedStatement.setString(1, storeId);
+		try {
+			rs = preparedStatement.executeQuery();
+		} catch (SQLException e) {
+			// TODO: log exception
+			return false;
+
+		}rs.next();
+		if (rs.getString("mall_id") == null) {
+			preparedStatement = connection.prepareStatement(SELECT_STORE_CITY_BY_ID);
+			preparedStatement.setString(1, storeId);
+			try {
+				rs = preparedStatement.executeQuery();
+			} catch (SQLException e) {
+				// TODO: log exception
+				return false;
+
+			}
+			while (rs.next()) {
+				flag = true;
+				System.out.println("This store not located in mall...");
+				String city_name = rs.getString("city_name");
+				System.out.println("city_name : " + city_name);
+			}
+			preparedStatement = connection.prepareStatement(SELECT_STORE_STREET_BY_ID);
+			preparedStatement.setString(1, storeId);
+			try {
+				rs = preparedStatement.executeQuery();
+			} catch (SQLException e) {
+				// TODO: log exception
+				return false;
+
+			}
+			while (rs.next()) {
+				flag = true;
+				String street_name = rs.getString("street_name");
+				System.out.println("street_name : " + street_name);
+			}
+		}else
+			System.out.println("This store located in a mall...");
+		//TODO: add mall address
+		if (!flag) {
+			System.out.println("No results found. Please try again from main menu...");
+			System.out.println();
+
+		}
+		System.out.println();
+		System.out.println("Employees: ");
+		new Employees(connection).getEmployeeByChainId(storeId);
+		return true;
 	}
 
 }

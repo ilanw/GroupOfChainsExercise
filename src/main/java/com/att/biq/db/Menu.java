@@ -109,7 +109,12 @@ public class Menu extends DbBase {
 				System.out.println("Please insert shope Id :");
 				String storeId = sc.nextLine();
 
-				new Stores(con).getAllStoreDetails(storeId);
+				boolean res = new Stores(con).getAllStoreDetails(storeId);
+				if (!res) {
+					System.out.println();
+					System.out.println("Something went wrong. Query failed. Please try again...");
+					System.out.println();
+				}
 				break;
 			}
 			case "0": {

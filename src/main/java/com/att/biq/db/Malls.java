@@ -2,6 +2,7 @@ package com.att.biq.db;
 
 /**
  * Author: Ilan Wallerstein
+ * This class represent a mall in the application. You can have a independent mall or as part of a group 
  */
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

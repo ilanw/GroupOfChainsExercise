@@ -6,6 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * This class represent an address which set by combination of city + street + building no
+ *
+ */
 public class Address {
     private String SELECT_ALL_ADDRESS = "SELECT * FROM address ";
     private String SELECT_ALL_CITIES = "SELECT * FROM cities ";

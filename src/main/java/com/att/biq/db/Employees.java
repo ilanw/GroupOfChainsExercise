@@ -5,7 +5,6 @@ package com.att.biq.db;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Scanner;
 
 import com.mysql.jdbc.Connection;
@@ -112,7 +111,7 @@ public class Employees {
 		}
 		System.out.println();
 		if (!flag) {
-			System.out.println("No results found. Please try again from main menu...");
+			System.out.println("No results found.");
 			System.out.println();
 
 		}
